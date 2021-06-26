@@ -31,7 +31,7 @@ def analyze_TWF(
     results = {}
     
     print ("Analyze Starting")
-    for box in selection.selection_boxes:
+    for box in selection:
         for x, y, z in box:
             block = world.get_block(x, y, z, dimension)
             block_str = str(block)

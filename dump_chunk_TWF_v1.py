@@ -18,7 +18,7 @@ def dump_chunk_TWF(
     
     print ("DumpChunk Starting")
 
-    for box in selection.selection_boxes:
+    for box in selection:
         for cx, cz in box.chunk_locations():
             chunk = world.get_chunk(cx, cz, dimension)
             print (chunk)

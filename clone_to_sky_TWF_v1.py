@@ -6,6 +6,11 @@ from amulet.api.data_types import Dimension
 
 from amulet.api.level import ImmutableStructure
 
+def mark_box_dirty(world, dimension, box):
+    for cx, cz in box.chunk_locations():  #  Mark the edits as dirty
+        chunk = world.get_chunk(cx, cz, dimension)
+        chunk.changed = True
+
 def clone_to_sky_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
 ):
@@ -31,10 +36,7 @@ def clone_to_sky_TWF(
             
             cy += height
             
-        for cx, cz in box.chunk_locations():  #  Mark the edits as dirty
-            chunk = world.get_chunk(cx, cz, dimension)
-            chunk.changed = True
-    
+        mark_box_dirty(world, dimension, box)
 
 export = {
     "name": "clone_to_sky (TWF v1)",

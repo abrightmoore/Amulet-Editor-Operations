@@ -6,7 +6,9 @@ Authored and Contributed Amulet Editor Operations
 
 
 _More Resources_
+
 **StealthyExpert** is writing and sharing Amulet Editor Operations here: https://github.com/StealthyExpertX/Amulet-Plugins
 
 The Amulet Editor and MCEdit Unified Discord is where all the cool kids hang out. Check the #amulet-plugins channel. Join via https://www.amuletmc.com/, the /r/MCEdit reddit, or with this invite: https://discord.gg/pGUwZb9m65
 
+I'm doing a bit of tweet-devlog over here. Follow for new discoveries, methods and real time discussions: https://twitter.com/abrightmoore/status/1408697813542658048

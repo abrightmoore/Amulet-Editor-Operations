@@ -9,6 +9,8 @@ Authored and Contributed Amulet Editor Operations. Based on information from Gen
 
 * **clone_to_sky_TWF_v1.py** replicates the selection vertically. Use this to create towers from a single 'floor'. Shows how to access the copy/paste similar to how we would use MCSchematics in the earlier program MCEdit Unified. Includes a helper method to mark the chunks intersecting the selection boxes as dirty.
 
+* **create_and_fill_a_chest_TWF_v1.py** shows how to work with NBT data structures, and block entities in a chunk. This Operation creates a single chest at the lowest selection point and puts some items in it.
+
 _More Resources_
 
 **StealthyExpert** is writing and sharing Amulet Editor Operations here: https://github.com/StealthyExpertX/Amulet-Plugins

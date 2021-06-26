@@ -32,7 +32,7 @@ def clone_to_sky_TWF(
 
         while cy + height < 256:  #  How to get the max height of the chunks here?
             print (cy)
-            world.paste(structure,  structure.dimensions[0], SelectionGroup(box),  world.dimensions[0], (cx, cy, cz), [1.0, 1.0, 1.0], [0.0, 0.0, 0.0], True, False, [], False)
+            world.paste(structure,  structure.dimensions[0], SelectionGroup(box),  dimension, (cx, cy, cz), [1.0, 1.0, 1.0], [0.0, 0.0, 0.0], True, False, [], False)
             
             cy += height
             

@@ -75,7 +75,7 @@ def set_blocks_from_palette_TWF(
             ]
 
 
-    for box in selection.selection_boxes:
+    for box in selection:
         for pos in box:
             set_block( world, dimension, pos, random.choice(palette))
         

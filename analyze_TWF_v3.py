@@ -1,7 +1,4 @@
-# Fixed function example plugin
-# The fixed function operation pipeline works in much the same way as MCEdit Unified filters with some modifications
-# You define a function and it will appear in the UI for you to run
-
+# @TheWorldFoundry
 
 from amulet.api.selection import SelectionGroup
 from amulet.api.level import BaseLevel
@@ -16,7 +13,6 @@ def write_json(filename, json_object):
 def read_json(filename):
     with open(filename, "r") as infile:
         return json.load(infile)
-
 
 # for those that are new to python 3 the thing after the colon is the object type that the variable should be
 def analyze_TWF(
@@ -35,7 +31,6 @@ def analyze_TWF(
     results = {}
     
     print ("Analyze Starting")
-    print (dir(selection))
     for box in selection.selection_boxes:
         for x, y, z in box:
             block = world.get_block(x, y, z, dimension)
@@ -47,8 +42,8 @@ def analyze_TWF(
                 results[block_str] = val
             else:
                 results[block_str] = 1
-            count += 1
-            yield count / iter_count
+        count += 1
+        yield count / iter_count
     
     # Print out the dictionary
     print (results)

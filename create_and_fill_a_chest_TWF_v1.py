@@ -23,7 +23,7 @@ def get_random_item(world):
     return item
 
 def get_native_block_by_name(world, namespace, name, properties):
-    block, blockEntity, isBlock = world.translation_manager.get_version( world.level_wrapper.platform, world.level_wrapper.version).block.to_universal(Block(namespace, name, {}))
+    block, blockEntity, isBlock = world.translation_manager.get_version( world.level_wrapper.platform, world.level_wrapper.version).block.to_universal(Block(namespace, name, properties))
     return (block, blockEntity, isBlock)
 
 def create_and_fill_a_chest_TWF(

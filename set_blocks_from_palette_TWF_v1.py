@@ -44,8 +44,9 @@ def set_blocks_from_palette_TWF(
                 get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("red") }),
                 get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("black") }),
                 get_native_block_by_name(world, "minecraft", "stone", {}),
-                get_native_block_by_name(world, "minecraft", "diorite", {}),
-                get_native_block_by_name(world, "minecraft", "diorite", { "polished": TAG_Byte(1) })
+                get_native_block_by_name(world, "minecraft", "stone", {"stone_type": TAG_String("diorite")}),
+                get_native_block_by_name(world, "minecraft", "stone", {"stone_type": TAG_String("diorite_smooth")})
+
             ]
 
 

@@ -21,7 +21,17 @@ def dump_chunk_TWF(
     for box in selection:
         for cx, cz in box.chunk_locations():
             chunk = world.get_chunk(cx, cz, dimension)
-            print (chunk)
+            
+            print ("Chunk at "+str(cx)+", "+str(cz))
+            print (str(chunk))
+            print (dir(chunk))  #  All the methods and properties of a chunk object in Amulet
+            print ("Chunk block entities:")
+            for be in chunk.block_entities:
+                print (str(be))  #  snbt view of containers like chests, furnaces, etc.
+            print ("Chunk entities:")
+            for e in chunk.entities:
+                print (str(e))  #  Currently empty. As Amulet develops this will hold things like Sheep and Villagers etc.
+
             
             
         count += 1

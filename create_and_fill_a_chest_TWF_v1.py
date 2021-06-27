@@ -23,8 +23,8 @@ def get_random_item(world):
     return item
 
 def get_native_block_by_name(world, namespace, name, properties):
-    block, blockEntity, isBlock = world.translation_manager.get_version( world.level_wrapper.platform, world.level_wrapper.version).block.to_universal(Block(namespace, name, properties))
-    return (block, blockEntity, isBlock)
+    block, blockEntity, isPartial = world.translation_manager.get_version( world.level_wrapper.platform, world.level_wrapper.version).block.to_universal(Block(namespace, name, properties))
+    return (block, blockEntity, isPartial)
 
 def create_and_fill_a_chest_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
@@ -36,7 +36,7 @@ def create_and_fill_a_chest_TWF(
    
     print ("create_and_fill_a_chest Starting")
 
-    block, blockEntity, isBlock = get_native_block_by_name(world, "minecraft", "chest", {})  # Get a native (not a universal) block to work with
+    block, blockEntity, isPartial = get_native_block_by_name(world, "minecraft", "chest", {})  # Get a native (not a universal) block to work with
     
     # Example result:
     # (Block(universal_minecraft:chest[facing="north",type="single"]), 

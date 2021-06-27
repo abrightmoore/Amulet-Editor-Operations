@@ -9,8 +9,8 @@ from amulet_nbt import TAG_String, TAG_Int, TAG_Byte  #  For working with block 
 import random
 
 def get_native_block_by_name(world, namespace, name, properties):
-    block, blockEntity, isBlock = world.translation_manager.get_version( world.level_wrapper.platform, world.level_wrapper.version).block.to_universal(Block(namespace, name, properties))
-    return (block, blockEntity, isBlock)
+    block, blockEntity, isPartial = world.translation_manager.get_version( world.level_wrapper.platform, world.level_wrapper.version).block.to_universal(Block(namespace, name, properties))
+    return (block, blockEntity, isPartial)
 
 def set_blocks_from_palette_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
@@ -52,8 +52,8 @@ def set_blocks_from_palette_TWF(
 
     for box in selection:
         for px, py, pz in box:
-            block, blockEntity, isBlock = random.choice(palette)
-            print (block, blockEntity, isBlock)
+            block, blockEntity, isPartial = random.choice(palette)
+            print (block, blockEntity, isPartial)
             world.set_version_block(px, py, pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
         
         count += 1

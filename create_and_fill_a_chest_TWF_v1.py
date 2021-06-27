@@ -67,8 +67,12 @@ def create_and_fill_a_chest_TWF(
 
     block_id = getBlockIndex(world, "minecraft", "chest", { })
 
+    print (world.block_palette.blocks[block_id])
+
     for box in selection:  # Set a chest at the lowest x,y,z in each box
         pos = px, py, pz = box.min_x, box.min_y, box.min_z
+        
+
         
         # Make new NBT for this chest      
         theNBT = TAG_Compound()
@@ -84,8 +88,14 @@ def create_and_fill_a_chest_TWF(
         utags["Items"] = items
 
         newBE = BlockEntity( "minecraft", "chest", px, py, pz, theNBT )  #  Universal namespace for BE for now... changing?
-        set_block( world, dimension, pos, block_id, newBE)
-
+        # set_block( world, dimension, pos, block_id, newBE)
+        world.set_version_block(px, py, pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), world.block_palette.blocks[block_id], newBE)
+        
+        
+        block, blockEntity = world.get_version_block(px, py, pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version))
+        print (block)
+        print (blockEntity)
+        
 
 export = {
     "name": "create_and_fill_a_chest (TWF v1)",

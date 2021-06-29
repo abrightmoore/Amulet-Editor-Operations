@@ -6,6 +6,7 @@ from amulet.api.data_types import Dimension
 
 from amulet.api.block import Block  #  For working with Blocks
 from amulet.api.block_entity import BlockEntity
+from amulet.api.errors import ChunkDoesNotExist
 from amulet_nbt import *  #  For working with block properties
 import random
 
@@ -36,25 +37,34 @@ def make_chunk_outline_TWF(
 
 
     for box in selection:
-        for cx, cz in box.chunk_locations():
-            chunk = world.get_chunk(cx, cz, dimension)  
-            py = 255
-            
-            for px in range(cx<<4, (cx<<4)+16):
-                    pz = cz<<4
-                    block, blockEntity, isPartial = random.choice(palette)
-                    world.set_version_block(px, py,  pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
-                    pz = (cz<<4)+16-1
-                    block, blockEntity, isPartial = random.choice(palette)
-                    world.set_version_block(px, py,  pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
-                    
-            for pz in range(cz<<4, (cz<<4)+16):
-                    px = cx<<4
-                    block, blockEntity, isPartial = random.choice(palette)
-                    world.set_version_block(px, py,  pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
-                    px = (cx<<4)+16-1
-                    block, blockEntity, isPartial = random.choice(palette)
-                    world.set_version_block(px, py,  pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
+        minx = box.min_x>>4
+        maxx = box.max_x>>4
+        minz = box.min_z>>4
+        maxz = box.max_z>>4
+    
+        #for cx, cz in box.chunk_locations():
+        for cx in range(minx, maxx):
+            for cz in range(minz, maxz):
+                try:
+                    chunk = world.get_chunk(cx, cz, dimension)  
+                    py = 255            
+                    for px in range(cx<<4, (cx<<4)+16):
+                            pz = cz<<4
+                            block, blockEntity, isPartial = random.choice(palette)
+                            world.set_version_block(px, py,  pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
+                            pz = (cz<<4)+16-1
+                            block, blockEntity, isPartial = random.choice(palette)
+                            world.set_version_block(px, py,  pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
+                            
+                    for pz in range(cz<<4, (cz<<4)+16):
+                            px = cx<<4
+                            block, blockEntity, isPartial = random.choice(palette)
+                            world.set_version_block(px, py,  pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
+                            px = (cx<<4)+16-1
+                            block, blockEntity, isPartial = random.choice(palette)
+                            world.set_version_block(px, py,  pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
+                except ChunkDoesNotExist:
+                    print ("Chunk not present "+str(cx)+", "+str(cz))
     
         count += 1
         yield count / iter_count

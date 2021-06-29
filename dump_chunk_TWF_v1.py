@@ -4,6 +4,8 @@ from amulet.api.selection import SelectionGroup
 from amulet.api.level import BaseLevel
 from amulet.api.data_types import Dimension
 
+from amulet.api.errors import ChunkDoesNotExist, ChunkLoadError
+
 # for those that are new to python 3 the thing after the colon is the object type that the variable should be
 def dump_chunk_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
@@ -20,19 +22,20 @@ def dump_chunk_TWF(
 
     for box in selection:
         for cx, cz in box.chunk_locations():
-            chunk = world.get_chunk(cx, cz, dimension)
+            try:
+                chunk = world.get_chunk(cx, cz, dimension)
             
-            print ("Chunk at "+str(cx)+", "+str(cz))
-            print (str(chunk))
-            print (dir(chunk))  #  All the methods and properties of a chunk object in Amulet
-            print ("Chunk block entities:")
-            for be in chunk.block_entities:
-                print (str(be))  #  snbt view of containers like chests, furnaces, etc.
-            print ("Chunk entities:")
-            for e in chunk.entities:
-                print (str(e))  #  Currently empty. As Amulet develops this will hold things like Sheep and Villagers etc.
-
-            
+                print ("Chunk at "+str(cx)+", "+str(cz))
+                print (str(chunk))
+                print (dir(chunk))  #  All the methods and properties of a chunk object in Amulet
+                print ("Chunk block entities:")
+                for be in chunk.block_entities:
+                    print (str(be))  #  snbt view of containers like chests, furnaces, etc.
+                print ("Chunk entities:")
+                for e in chunk.entities:
+                    print (str(e))  #  Currently empty. As Amulet develops this will hold things like Sheep and Villagers etc.
+            except ChunkLoadError:
+                print ("Unable to load chunk "+str(cx)+", "+str(cz)+" at coordinates "+str(cx<<4)+", "+str(cz<<4))
             
         count += 1
         yield count / iter_count

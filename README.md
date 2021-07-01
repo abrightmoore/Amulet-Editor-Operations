@@ -13,6 +13,10 @@ Authored and Contributed Amulet Editor Operations. Based on information from Gen
 
 * **make_chunk_outline_TWF_v1.py** draws wool in the sky at y-255 around the chunk border.
 
+* **klein_loop_kangaroo_physics_TWF_v1** Some methods for plotting into a selection box in worldspace with a scaled pointcloud.
+
+
+
 _More Resources_
 
 **StealthyExpert** is writing and sharing Amulet Editor Operations here: https://github.com/StealthyExpertX/Amulet-Plugins

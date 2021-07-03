@@ -1,0 +1,60 @@
+[
+    {
+        "name" : "minecraft:wooden_axe",
+        "display" : "Choppyrator",
+        "damage" : 0,
+        "lore" : [
+            "Choppa",
+            "Chopper",
+            "Choppah",
+            "Choppuh"
+        ],
+        "enchants" : [
+            {
+                "id" : 28,
+                "level" : 1
+            }
+        ]
+    },
+    {
+        "name" : "minecraft:diamond_sword",
+        "display" : "Stabby Stabby",
+        "damage" : 10,
+        "lore" : [
+            "Ouchy",
+            "Ouch",
+            "Ouchedy"
+        ],
+        "enchants" : [
+            {
+                "id" : 11,
+                "level" : 5
+            },
+            {
+                "id" : 12,
+                "level" : 2
+            }
+        ]
+    },
+    {
+        "name" : "minecraft:iron_sword",
+        "display" : "Stabbette",
+        "damage" : 40,
+        "lore" : [
+            "Cute",
+            "Cutty",
+            "Cutter",
+            "Cut"
+        ],
+        "enchants" : [
+            {
+                "id" : 11,
+                "level" : 3
+            },
+            {
+                "id" : 12,
+                "level" : 1
+            }
+        ]
+    }
+]

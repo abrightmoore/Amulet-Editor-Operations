@@ -1,7 +1,9 @@
 # Amulet-Editor-Operations
 Authored and Contributed Amulet Editor Operations. Based on information from GentleGiantJGC.
 
-* **enclave_TWF_v1** * Wrap the selection around a cylinder centred on its lowest x,z point
+* **enclave_TWF_v1** Wrap the selection around a cylinder centred on its lowest x,z point
+
+* **lore_loader_TWF_v1** Creates chests with items with custom naming, lore, enchants, and other properties. Input file goes in **Amulet/plugins/operations/lore_loader_input.json** and an example of the layout is available here in this repository.
 
 * **analyze_TWF_v3.py** (compatible with v0.8.8+) will count the block types in the selection and print the results to the Amulet Editor console, and write the data in JSON format to the file analyze_results.json in your Amulet directory. This Operation is a good example of how to work with the _selection_ to find the co-ordinates of all the selected blocks. It also shows how to work with block metadata in the Amulet Editor Universal format.
 

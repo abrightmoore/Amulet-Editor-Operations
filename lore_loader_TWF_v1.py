@@ -114,7 +114,10 @@ class Container:
         self.contents[slot_num] = (item, qty)
     
     def add_item(self, item, qty):
+        #  keys_sorted = self.contents.keys().sort()
+        #  keys_sorted = sorted(self.contents, key=self.contents.get, reverse=False)
         keys_sorted = sorted(self.contents.keys())
+
         if len(keys_sorted) == 0:
             self.add_item_in_slot(0, item, qty)
         else:
@@ -144,6 +147,7 @@ class Container:
             item_NBT = item.get_NBT(qty)
             item_NBT["Slot"] = TAG_Byte(i)
             items.append( item_NBT )
+            print(item_NBT)
         utags["Items"] = items
         print (theNBT)
         return theNBT
@@ -189,12 +193,13 @@ def lore_loader_TWF(
         if "display" in i:
             item.set_display_name(i["display"])
         items.append(item)
+        #  print (item.get_NBT(1))
     
     iteration = 0
     for box in selection:
         # While there are more items to place, keep going
         for x, y, z in box:
-            if (x+y+z)%3 == 2 and iteration < len(items):
+            if (x+y+z)%3 == 0 and iteration < len(items):
                 slot_count = 0
                 chest = Container()
                 while iteration < len(items) and slot_count < chest.get_num_slots_chest():  

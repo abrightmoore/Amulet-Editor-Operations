@@ -1,5 +1,9 @@
 [
     {
+        "name" : "minecraft:iron_boots",
+        "damage" : 0
+    },
+    {
         "name" : "minecraft:wooden_axe",
         "display" : "Choppyrator",
         "damage" : 0,

@@ -18,7 +18,7 @@ def enclave(world, dimension, box):
         WARNING: This draws OUTSIDE the selection box (because it has to).
         
         Example animation:
-            
+            https://twitter.com/abrightmoore/status/1410897766331523072?s=20
     '''
     twopi = pi * 2.0  #  Precalculate for efficiency
     
@@ -76,7 +76,7 @@ def enclave_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
 ):
     '''
-        Rotate the selection around itself 360 degrees.
+        Rotate the 3D selection around itself 360 degrees in the horizontal plane.
         
         @TheWorldFoundry 2021-07-01
     '''
@@ -91,8 +91,8 @@ def enclave_TWF(
     for box in selection:
         enclave(world, dimension, box)
         
-        count += 1
-        yield count / iter_count
+        count += 1  #  This is for the progress bar that shows when the operation is running
+        yield count / iter_count  #  This is for the progress bar that shows when the operation is running
 
  
 export = {

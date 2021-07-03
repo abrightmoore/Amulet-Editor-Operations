@@ -24,6 +24,8 @@ _More Resources_
 
 **StealthyExpert** is writing and sharing Amulet Editor Operations here: https://github.com/StealthyExpertX/Amulet-Plugins
 
+**5uso** uses Amulet Core API to do useful things here: https://github.com/5uso/AmuletScripts
+
 Amulet Core API docs: https://amulet-core.readthedocs.io/en/stable/api_reference/
 
 The Amulet Editor and MCEdit Unified Discord is where all the cool kids hang out. Check the #amulet-plugins channel. Join via https://www.amuletmc.com/, the /r/MCEdit reddit, or with this invite: https://discord.gg/pGUwZb9m65

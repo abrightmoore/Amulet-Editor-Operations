@@ -9,6 +9,8 @@ Authored and Contributed Amulet Editor Operations. Based on information from Gen
 
 * **dump_chunk_TWF_v1.py** (compatible with v0.8.8+) shows how to access the chunks that are intersecting the selection boxes, iterate through them, and write out some of their nbt structures to the Amulet Editor console.
 
+* **get_version_block_v1.py** output the details and nbt of all the blocks in the selection. Writes to the console. Use for comparing in-game nbt with manual edits.
+
 * **set_blocks_from_palette_TWF_v1.py** (compatible with v0.8.8+) fills the selection with random blocks defined in a 'palette' of block types set up within the script. It uses the platform and version information from the loaded level to avoid the user having to specify a particular game version in the script. It also has examples of passing block properties, which need to be set as NBT tags. (I've tried to simplify the block access as much as possible for the user, at the expense of performance).
 
 * **clone_to_sky_TWF_v1.py** replicates the selection vertically. Use this to create towers from a single 'floor'. Shows how to access the copy/paste similar to how we would use MCSchematics in the earlier program MCEdit Unified. Includes a helper method to mark the chunks intersecting the selection boxes as dirty.

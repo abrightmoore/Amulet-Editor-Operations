@@ -17,6 +17,8 @@ Authored and Contributed Amulet Editor Operations. Based on information from Gen
 
 * **create_and_fill_a_chest_TWF_v1.py** shows how to work with NBT data structures, and block entities in a chunk. This Operation creates a single chest at the lowest selection point and puts some items in it.
 
+* **tapering_spiral_TWF_v1.py** draws a snow-cone shape in space with a series of block types. Radius is average of the halved width and depth of the selection box.
+
 * **make_chunk_outline_TWF_v1.py** draws wool in the sky at y-255 around the chunk border.
 
 * **klein_loop_kangaroo_physics_TWF_v1** Some methods for plotting into a selection box in worldspace with a scaled pointcloud.

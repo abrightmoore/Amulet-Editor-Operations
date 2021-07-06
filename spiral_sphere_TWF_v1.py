@@ -54,7 +54,8 @@ def spiral_sphere_TWF(
                 x = cx + int(x)
                 y = box.min_y + int(y)
                 z = cz + int(z)
-                points[(x, y, z)] = block               
+                if (x, y, z) not in points:
+                    points[(x, y, z)] = block               
                 u += ang
     
     for (x, y, z) in points.keys():

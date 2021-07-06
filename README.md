@@ -19,6 +19,9 @@ Authored and Contributed Amulet Editor Operations. Based on information from Gen
 
 * **tapering_spiral_TWF_v1.py** draws a snow-cone shape in space with a series of block types. Radius is average of the halved width and depth of the selection box.
 
+* **spiral_sphere_TWF_v1.py** draws a spindle shape in space with a series of block types. Radius is average of the halved width and depth of the selection box. Stores the blocks to be placed to minimise drawing requests.
+
+
 * **make_chunk_outline_TWF_v1.py** draws wool in the sky at y-255 around the chunk border.
 
 * **klein_loop_kangaroo_physics_TWF_v1** Some methods for plotting into a selection box in worldspace with a scaled pointcloud.

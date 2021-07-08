@@ -33,9 +33,9 @@ def sphere_TWF(
         
     ]
     
-    block1 = random.choice(blocks)
-    block2 = random.choice(blocks)
-    block3 = random.choice(blocks)
+    block1 = random.choice(blocks)  #  This block will be at the centre
+    block2 = random.choice(blocks)  #  This block will be the main volume of the sphere
+    block3 = random.choice(blocks)  #  This block will be a pattern around the surface
     
     block_entity = None
     points = {}
@@ -66,9 +66,9 @@ def sphere_TWF(
 
             if value == 0:
                 points[(x+cx-x_is_odd, y+cy-y_is_odd, z+cz-z_is_odd)] = block1
-            elif abs(value - 1) < 0.01:
-                points[(x+cx-x_is_odd, y+cy-y_is_odd, z+cz-z_is_odd)] = block2
             elif value < 1:
+                points[(x+cx-x_is_odd, y+cy-y_is_odd, z+cz-z_is_odd)] = block2
+            elif abs(value - 1) < 0.01:
                 points[(x+cx-x_is_odd, y+cy-y_is_odd, z+cz-z_is_odd)] = block3
     
     for (x, y, z) in points.keys():

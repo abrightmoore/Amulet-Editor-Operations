@@ -1,16 +1,18 @@
 # @TheWorldFoundry
 
-from amulet.api.selection import SelectionGroup
-from amulet.api.level import BaseLevel
-from amulet.api.data_types import Dimension
+from typing import Tuple, Dict
 
-from amulet.api.block import Block  #  For working with Blocks
+from amulet.api.selection import SelectionGroup, SelectionBox
+from amulet.api.level import BaseLevel
+from amulet.api.data_types import Dimension, BlockCoordinates
+
+from amulet.api.block import Block, UniversalAirBlock  #  For working with Blocks
 from amulet.api.block_entity import BlockEntity
 from amulet_nbt import *  #  For working with block properties
 from math import sin, cos, pi, atan2, sqrt
 import random
 
-def enclave(world, dimension, box):
+def enclave(world: BaseLevel, dimension: Dimension, box: SelectionBox):
     '''
         @TheWorldFoundry - take the given selection, work out how big the shape is once rotated around itself
         Map the blocks from the selection to rotated slices pivoting around the lowest-most x,z column.
@@ -26,12 +28,12 @@ def enclave(world, dimension, box):
     height = box.max_y - box.min_y
     depth = box.max_z - box.min_z
 
-    block_air, blockEntity_air, isPartial = get_native_block_by_name(world, "minecraft", "air", {})  #  For erasing source
-    source_blocks = {}  #  For quick iteration through hashed key lookup
+    # Store the location of each block in the source and the block and block entity in the world's version format
+    source_blocks: Dict[BlockCoordinates, Tuple[Block, BlockEntity]] = {}
     for x,y,z in box:
         source_blocks[(x - box.min_x, y - box.min_y, z - box.min_z)] = block_at(world, dimension, x, y, z)
         #  Erase this original block
-        world.set_version_block(x, y, z, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block_air, blockEntity_air)  #  We will be overwriting the space we are sampling. Hint: Work with a pasted copy
+        world.set_version_block(x, y, z, dimension, ("bedrock", (1, 17, 0)), Block("minecraft", "air"), None)  #  We will be overwriting the space we are sampling. Hint: Work with a pasted copy
     
     #  How many copies will span around the midpoint?
     circumference_mid = twopi * (width >> 1)  #  The inner column gets squeezed and the outer layer gets stretched
@@ -64,13 +66,10 @@ def enclave(world, dimension, box):
             
         
 
-def block_at(world, dimension, x, y ,z):
+def block_at(world, dimension, x, y ,z) -> Tuple[Block, BlockEntity]:
+    """Get the block at a given location in the world's version"""
     block, blockEntity = world.get_version_block(x, y ,z, dimension, (world.level_wrapper.platform, world.level_wrapper.version))
     return (block, blockEntity)
-
-def get_native_block_by_name(world, namespace, name, properties):
-    block, blockEntity, isPartial = world.translation_manager.get_version( world.level_wrapper.platform, world.level_wrapper.version).block.to_universal(Block(namespace, name, properties))
-    return (block, blockEntity, isPartial)
 
 def enclave_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict

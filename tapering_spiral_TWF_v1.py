@@ -15,6 +15,8 @@ import json
 def tapering_spiral_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
 ):
+    block_platform = "bedrock"  # the platform the blocks below are defined in
+    block_version = (1, 17, 0)  # the version the blocks below are defined in
     blocks = [
         Block("minecraft", "glowstone", {}),
         Block("minecraft", "wool", { "color": TAG_String("white")}),
@@ -55,7 +57,7 @@ def tapering_spiral_TWF(
                 y = box.min_y + int(y)
                 z = cz + int(z)
                 
-                world.set_version_block(x, y, z, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, block_entity)
+                world.set_version_block(x, y, z, dimension, (block_platform, block_version), block, block_entity)
                
                 u += ang
 

@@ -15,14 +15,14 @@ import json
 def spiral_sphere_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
 ):
+    block_platform = "bedrock"  # the platform the blocks below are defined in
+    block_version = (1, 17, 0)  # the version the blocks below are defined in
     blocks = [
         Block("minecraft", "glowstone", {}),
         Block("minecraft", "wool", { "color": TAG_String("white")}),
         Block("minecraft", "wool", { "color": TAG_String("yellow")}),
         Block("minecraft", "wool", { "color": TAG_String("lime")}),
         Block("minecraft", "wool", { "color": TAG_String("magenta")}),
-
-        
     ]
     
     block_entity = None
@@ -59,7 +59,7 @@ def spiral_sphere_TWF(
                 u += ang
     
     for (x, y, z) in points.keys():
-        world.set_version_block(x, y, z, dimension, (world.level_wrapper.platform, world.level_wrapper.version), points[x, y, z], block_entity)
+        world.set_version_block(x, y, z, dimension, (block_platform, block_version), points[x, y, z], block_entity)
 
 export = {
     "name": "spiral_sphere_TWF (v1)",

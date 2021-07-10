@@ -8,9 +8,6 @@ from amulet.api.block import Block  #  For working with Blocks
 from amulet_nbt import TAG_String, TAG_Int, TAG_Byte  #  For working with block properties
 import random
 
-def get_native_block_by_name(world, namespace, name, properties):
-    block, blockEntity, isPartial = world.translation_manager.get_version( world.level_wrapper.platform, world.level_wrapper.version).block.to_universal(Block(namespace, name, properties))
-    return (block, blockEntity, isPartial)
 
 def set_blocks_from_palette_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
@@ -26,39 +23,38 @@ def set_blocks_from_palette_TWF(
     
     print ("set_blocks_from_palette Starting")
 
+    block_platform = "bedrock"  # the platform the blocks below are defined in
+    block_version = (1, 17, 0)  # the version the blocks below are defined in
     palette = [
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("white") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("orange") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("magenta") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("light blue") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("yellow") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("lime") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("pink") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("gray") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("light gray") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("cyan") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("purple") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("blue") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("brown") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("green") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("red") }),
-                get_native_block_by_name(world, "minecraft", "wool", { "color": TAG_String("black") }),
-                get_native_block_by_name(world, "minecraft", "stone", {}),
-                get_native_block_by_name(world, "minecraft", "stone", {"stone_type": TAG_String("diorite")}),
-                get_native_block_by_name(world, "minecraft", "stone", {"stone_type": TAG_String("diorite_smooth")})
-
-            ]
-
+        Block("minecraft", "wool", { "color": TAG_String("white") }),
+        Block("minecraft", "wool", { "color": TAG_String("orange") }),
+        Block("minecraft", "wool", { "color": TAG_String("magenta") }),
+        Block("minecraft", "wool", { "color": TAG_String("light blue") }),
+        Block("minecraft", "wool", { "color": TAG_String("yellow") }),
+        Block("minecraft", "wool", { "color": TAG_String("lime") }),
+        Block("minecraft", "wool", { "color": TAG_String("pink") }),
+        Block("minecraft", "wool", { "color": TAG_String("gray") }),
+        Block("minecraft", "wool", { "color": TAG_String("light gray") }),
+        Block("minecraft", "wool", { "color": TAG_String("cyan") }),
+        Block("minecraft", "wool", { "color": TAG_String("purple") }),
+        Block("minecraft", "wool", { "color": TAG_String("blue") }),
+        Block("minecraft", "wool", { "color": TAG_String("brown") }),
+        Block("minecraft", "wool", { "color": TAG_String("green") }),
+        Block("minecraft", "wool", { "color": TAG_String("red") }),
+        Block("minecraft", "wool", { "color": TAG_String("black") }),
+        Block("minecraft", "stone", {}),
+        Block("minecraft", "stone", {"stone_type": TAG_String("diorite")}),
+        Block("minecraft", "stone", {"stone_type": TAG_String("diorite_smooth")})
+    ]
 
     for box in selection:
         for px, py, pz in box:
-            block, blockEntity, isPartial = random.choice(palette)
-            print (block, blockEntity, isPartial)
-            world.set_version_block(px, py, pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
+            block = random.choice(palette)
+            print(block)
+            world.set_version_block(px, py, pz, dimension, (block_platform, block_version), block)
         
         count += 1
         yield count / iter_count
-    
 
 
 export = {

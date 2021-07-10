@@ -15,6 +15,8 @@ import json
 def sphere_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
 ):
+    block_platform = "bedrock"  # the platform the blocks below are defined in
+    block_version = (1, 17, 0)  # the version the blocks below are defined in
     blocks = [
         Block("minecraft", "air", {}),
         Block("minecraft", "glowstone", {}),
@@ -73,7 +75,7 @@ def sphere_TWF(
     
     for (x, y, z) in points.keys():
         # print (x,y,z)
-        world.set_version_block(int(x), int(y), int(z), dimension, (world.level_wrapper.platform, world.level_wrapper.version), points[x, y, z], block_entity)
+        world.set_version_block(int(x), int(y), int(z), dimension, (block_platform, block_version), points[x, y, z], block_entity)
 
 export = {
     "name": "sphere_TWF (v1)",

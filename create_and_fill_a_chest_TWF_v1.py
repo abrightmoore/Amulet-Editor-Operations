@@ -3,6 +3,7 @@
 from amulet.api.selection import SelectionGroup
 from amulet.api.level import BaseLevel
 from amulet.api.data_types import Dimension
+from amulet_map_editor.programs.edit.api.operations.errors import OperationError
 
 from amulet.api.block import Block  #  For working with Blocks
 from amulet.api.block_entity import BlockEntity
@@ -22,9 +23,6 @@ def get_random_item(world):
     item["Count"] = TAG_Byte(1)
     return item
 
-def get_native_block_by_name(world, namespace, name, properties):
-    block, blockEntity, isPartial = world.translation_manager.get_version( world.level_wrapper.platform, world.level_wrapper.version).block.to_universal(Block(namespace, name, properties))
-    return (block, blockEntity, isPartial)
 
 def create_and_fill_a_chest_TWF(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
@@ -33,10 +31,15 @@ def create_and_fill_a_chest_TWF(
         This method creates a chest in the selection box with some items within
         @TheWorldFoundry 2021-06-26
     '''
+    if world.level_wrapper.platform != "bedrock":
+        raise OperationError("This operation only supports Bedrock edition worlds.")
    
     print ("create_and_fill_a_chest Starting")
 
-    block, blockEntity, isPartial = get_native_block_by_name(world, "minecraft", "chest", {})  # Get a native (not a universal) block to work with
+    block_platform = "bedrock"  # the platform the blocks below are defined in
+    block_version = (1, 17, 0)  # the version the blocks below are defined in
+    # A chest facing north defined in Bedrock 1.17 format
+    block = Block("minecraft", "chest", {"facing_direction": TAG_String("2")})
     
     # Example result:
     # (Block(universal_minecraft:chest[facing="north",type="single"]), 
@@ -48,23 +51,29 @@ def create_and_fill_a_chest_TWF(
 
         # Make new NBT for this chest with some junk items
         theNBT = TAG_Compound()
-        utags = TAG_Compound()
-        theNBT["utags"] = utags
-        utags["isMovable"] = TAG_Byte(1)
-        utags["Findable"] = TAG_Byte(0)
-        items = TAG_List()
+        theNBT["isMovable"] = TAG_Byte(1)
+        theNBT["Findable"] = TAG_Byte(0)
+        theNBT["Items"] = items = TAG_List()
         for i in range(0, random.randint(1, 27)):  #  Collect some junk and pop it in
             item = get_random_item(world)
             item["Slot"] = TAG_Byte(i)
             items.append( item )
-        utags["Items"] = items
 
+        blockEntity = BlockEntity(
+            "",
+            "Chest",
+            0,
+            0,
+            0,
+            NBTFile(
+                theNBT
+            )
+        )
         # Create this chest in the world
-        blockEntity.nbt = theNBT
-        world.set_version_block(px, py, pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version), block, blockEntity)
+        world.set_version_block(px, py, pz, dimension, (block_platform, block_version), block, blockEntity)
         
         # Check what we just created in the world
-        block, blockEntity = world.get_version_block(px, py, pz, dimension, (world.level_wrapper.platform, world.level_wrapper.version))
+        block, blockEntity = world.get_version_block(px, py, pz, dimension, (block_platform, block_version))
         print (block)
         print (blockEntity)
         

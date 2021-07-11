@@ -17,36 +17,46 @@ def dump_chunk_TWF(
 
     iter_count = len(list(world.get_chunk_slice_box(dimension, selection)))
     count = 0
-    
-    print ("DumpChunk Starting")
+
+    print("DumpChunk Starting")
 
     for box in selection:
         for cx, cz in box.chunk_locations():
             try:
                 chunk = world.get_chunk(cx, cz, dimension)
-            
-                print ("Chunk at "+str(cx)+", "+str(cz))
-                print (str(chunk))
-                print (dir(chunk))  #  All the methods and properties of a chunk object in Amulet
-                print ("Chunk block entities:")
+
+                print("Chunk at " + str(cx) + ", " + str(cz))
+                print(str(chunk))
+                print(
+                    dir(chunk)
+                )  # All the methods and properties of a chunk object in Amulet
+                print("Chunk block entities:")
                 for be in chunk.block_entities:
-                    print (str(be))  #  snbt view of containers like chests, furnaces, etc.
-                print ("Chunk entities:")
+                    print(
+                        str(be)
+                    )  # snbt view of containers like chests, furnaces, etc.
+                print("Chunk entities:")
                 for e in chunk.entities:
-                    print (str(e))  #  Currently empty. As Amulet develops this will hold things like Sheep and Villagers etc.
+                    print(
+                        str(e)
+                    )  # Currently empty. As Amulet develops this will hold things like Sheep and Villagers etc.
             except ChunkLoadError:
-                print ("Unable to load chunk "+str(cx)+", "+str(cz)+" at coordinates "+str(cx<<4)+", "+str(cz<<4))
-            
+                print(
+                    "Unable to load chunk "
+                    + str(cx)
+                    + ", "
+                    + str(cz)
+                    + " at coordinates "
+                    + str(cx << 4)
+                    + ", "
+                    + str(cz << 4)
+                )
+
         count += 1
         yield count / iter_count
-    
 
 
 export = {  # This is what the program will actually look for. It describes how the operation will work
     "name": "DumpChunk (TWF v1)",  # the name of the plugin
-    "operation": dump_chunk_TWF  # the actual function to call when running the plugin
+    "operation": dump_chunk_TWF,  # the actual function to call when running the plugin
 }
-
-
-
-

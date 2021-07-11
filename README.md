@@ -42,3 +42,19 @@ Amulet Core API docs: https://amulet-core.readthedocs.io/en/stable/api_reference
 The Amulet Editor and MCEdit Unified Discord is where all the cool kids hang out. Check the #amulet-plugins channel. Join via https://www.amuletmc.com/, the /r/MCEdit reddit, or with this invite: https://discord.gg/pGUwZb9m65
 
 I'm doing a bit of tweet-devlog over here. Follow for new discoveries, methods and real time discussions: https://twitter.com/abrightmoore/status/1408697813542658048
+
+
+_Need help installing and using an Operation?_
+
+Here is a walkthrough of using the **Analyze** operation:
+1. Go here: https://github.com/abrightmoore/Amulet-Editor-Operations
+2. Click here: analyze_TWF_v3.py
+3. Click the button that says "Raw"
+4. Right Click and choose Save As
+5. In the location chooser, navigate to your Amulet/plugin/operations directory and save the file with its .py extension
+6. In the 3D editor of an Amulet Open World, mark a selection box using Select mode
+7. Choose the Operations mode
+8. Click the refresh cycle button if your Amulet session was already open when you saved the Analyze operation
+9. Choose "Analyze (TWF v3)" from the drop down list
+10. Press "Run Operation" button
+11. The results are shown on the console output, and a .json file is saved into the Amulet directory called "analyze_results.json"

@@ -33,6 +33,8 @@ Authored and Contributed Amulet Editor Operations. Based on information from Gen
 
 _More Resources_
 
+**PremiereHell** is writing operations to work with NBT structures here: https://github.com/PREMIEREHELL/Amulet-Plugins
+
 **StealthyExpert** is writing and sharing Amulet Editor Operations here: https://github.com/StealthyExpertX/Amulet-Plugins
 
 **5uso** uses Amulet Core API to do useful things here: https://github.com/5uso/AmuletScripts

@@ -7,6 +7,8 @@ Authored and Contributed Amulet Editor Operations. Based on information from Gen
 
 * **lore_loader_TWF_v1** Creates chests with items with custom naming, lore, enchants, and other properties. Input file goes in **Amulet/plugins/operations/lore_loader_input.json** and an example of the layout is available here in this repository.
 
+* **bedrock_geometry_export_v2_amulet.py** exports the selection as a bedrock geometry json file in the Amulet root directory. You can then load this in Blockbench to edit it and fix some of the inefficient cube layouts. Handy for those of us who start all modeling projects by placing blocks in game.
+
 * **analyze_TWF_v3.py** (compatible with v0.8.8+) will count the block types in the selection and print the results to the Amulet Editor console, and write the data in JSON format to the file analyze_results.json in your Amulet directory. This Operation is a good example of how to work with the _selection_ to find the co-ordinates of all the selected blocks. It also shows how to work with block metadata in the Amulet Editor Universal format.
 
 * **dump_chunk_TWF_v1.py** (compatible with v0.8.8+) shows how to access the chunks that are intersecting the selection boxes, iterate through them, and write out some of their nbt structures to the Amulet Editor console.

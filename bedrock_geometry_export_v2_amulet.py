@@ -91,7 +91,8 @@ def bedrock_geometry_export_v2(
         for (x,y,z) in cubes:
             i += 1
             sh = cubes[(x,y,z)]
-            shapes.append({"name": "mceu_cube_"+str(i), "origin": [x, y, z], "size": [sh[0], sh[1], sh[2]], "uv": [0, 0]})
+            if sh[0] > 0 and sh[1] > 0 and sh[2] > 0:
+                shapes.append({"name": "mceu_cube_"+str(i), "origin": [x, y, z], "size": [sh[0], sh[1], sh[2]], "uv": [0, 0]})
         
         json_object = {
             "format_version": "1.12.0",

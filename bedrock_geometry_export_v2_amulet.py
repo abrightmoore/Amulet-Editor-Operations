@@ -42,7 +42,7 @@ def bedrock_geometry_export_v2(
                 for x in range(box.min_x, box.max_x):
                     block_str = str(world.get_block(x, y, z, dimension))
                     if "air" not in block_str or "stair" in block_str:
-                        cubes[((x-box.min_x-cx), (y-box.min_y), (z-box.min_z-cz))] = [1, 1, 1]
+                        cubes[(-(x-box.min_x-cx), (y-box.min_y), (z-box.min_z-cz))] = [1, 1, 1]
 
         # Collapse adjacent cubes into bigger prisms
         attempts = 10

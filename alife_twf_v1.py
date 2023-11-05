@@ -39,8 +39,6 @@ class WorldContext:
         self.block_palette = block_palette
         if self.block_palette == None:
             self.block_palette = self.blocks
-        if(export != None):
-            print("Initialised Operation: "+export["name"])
         
     def block_at(self, x, y, z):
         """Get the block at a given location in the world's version"""

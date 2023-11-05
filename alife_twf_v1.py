@@ -79,7 +79,7 @@ class OperationControl:
         
     def get_next_box(self):
         if self.stage < len(self.selection):
-            print("Processing box "+str(self.stage)+" of "+str(len(self.selection)))
+            print("Processing box "+str(self.stage+1)+" of "+str(len(self.selection)))
             self.stage += 1
             return self.selection[self.stage-1]
         return None
@@ -93,7 +93,7 @@ class OperationControl:
 
     def show_progress(self, val):
         self.progress = float(self.stage)*self.operation_length + float(val-self.get_current_box().min_y)*self.yield_quantum        
-        print("Yielding at "+str(self.progress))
+        #  print("Yielding at "+str(self.progress))
         return self.progress
 
 def print_field(field):

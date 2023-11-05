@@ -14,15 +14,52 @@ import math
 import random
 import json
 
-def block_at(world, dimension, x, y, z):
-    """Get the block at a given location in the world's version"""
-    try:
-        block, blockEntity = world.get_version_block(
-            x, y, z, dimension, (world.level_wrapper.platform, world.level_wrapper.version)
+class WorldContext:
+    blocks = [
+        Block("minecraft", "air", {}),
+        Block("minecraft", "iron_block", {}),
+        Block("minecraft", "glowstone", {}),
+        Block("minecraft", "wool", {"color": TAG_String("white")}),
+        Block("minecraft", "wool", {"color": TAG_String("yellow")}),
+        Block("minecraft", "wool", {"color": TAG_String("lime")}),
+        Block("minecraft", "wool", {"color": TAG_String("magenta")}),
+        Block("minecraft", "wool", {"color": TAG_String("pink")}),
+        Block("minecraft", "wool", {"color": TAG_String("red")}),
+        Block("minecraft", "wool", {"color": TAG_String("black")}),
+        Block("minecraft", "wool", {"color": TAG_String("green")}),
+        Block("minecraft", "wool", {"color": TAG_String("purple")}),
+        Block("minecraft", "wool", {"color": TAG_String("brown")}),
+        Block("minecraft", "wool", {"color": TAG_String("silver")}),
+        Block("minecraft", "wool", {"color": TAG_String("gray")}),
+    ]
+
+    def __init__(self, world_context, dimension, block_palette):
+        self.world = world_context
+        self.dimension = dimension
+        self.block_palette = block_palette
+        if self.block_palette == None:
+            self.block_palette = self.blocks
+        
+    def block_at(self, x, y, z):
+        """Get the block at a given location in the world's version"""
+        try:
+            block, blockEntity = self.world.get_version_block(
+                x, y, z, self.dimension, (self.world.level_wrapper.platform, self.world.level_wrapper.version)
+            )
+            return block, blockEntity
+        except:
+            return None, None
+
+    def set_block_at(self, x, y, z, block, block_entity):
+        self.world.set_version_block(
+            int(x),
+            int(y),
+            int(z),
+            self.dimension,
+            (self.world.level_wrapper.platform, self.world.level_wrapper.version),
+            block,
+            block_entity
         )
-        return block, blockEntity
-    except:
-        return None, None
 
 def print_field(field):
     for z in range(0, len(field)):
@@ -61,28 +98,10 @@ def calculate_next_step(field):
 def alife_twf(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
 ):
-    block_platform = "bedrock"  # the platform the blocks below are defined in
-    block_version = (1, 20, 30)  # the version the blocks below are defined in
-    blocks = [
-        Block("minecraft", "air", {}),
-        Block("minecraft", "iron_block", {}),
-        Block("minecraft", "glowstone", {}),
-        Block("minecraft", "wool", {"color": TAG_String("white")}),
-        Block("minecraft", "wool", {"color": TAG_String("yellow")}),
-        Block("minecraft", "wool", {"color": TAG_String("lime")}),
-        Block("minecraft", "wool", {"color": TAG_String("magenta")}),
-        Block("minecraft", "wool", {"color": TAG_String("pink")}),
-        Block("minecraft", "wool", {"color": TAG_String("red")}),
-        Block("minecraft", "wool", {"color": TAG_String("black")}),
-        Block("minecraft", "wool", {"color": TAG_String("green")}),
-        Block("minecraft", "wool", {"color": TAG_String("purple")}),
-        Block("minecraft", "wool", {"color": TAG_String("brown")}),
-        Block("minecraft", "wool", {"color": TAG_String("silver")}),
-        Block("minecraft", "wool", {"color": TAG_String("gray")}),
-    ]
+    world_context = WorldContext(world, dimension, None)
 
-    block_alive = blocks[1]  # This block will be at the centre
-    block_dead = blocks[0]
+    block_alive = world_context.block_palette[1]  # This block will be at the centre
+    block_dead = world_context.block_palette[0]
     block_entity = None   #  Constant for non-containers
 
     points = {}
@@ -97,9 +116,9 @@ def alife_twf(
         for z in range(box.min_z, box.min_z+depth):
             row = []
             for x in range(box.min_x, box.min_x+width):
-                block_here, block_entity_here = block_at(world, dimension, x, y, z)
+                block_here, block_entity_here = world_context.block_at(x, y, z)
                 #  print(block_here)
-                if block_here != None and block_here != blocks[0]:   #  Air
+                if block_here != None and block_here != world_context.block_palette[0]:   #  Air
                     row.append(1)
                 else:
                     row.append(0)
@@ -121,23 +140,19 @@ def alife_twf(
                 row = field[z]
                 for x in range(len(row)):
                     if row[x] != 0:
-                        world.set_version_block(
+                        world_context.set_block_at(
                             int(x+box.min_x),
                             int(y),
                             int(z+box.min_z),
-                            dimension,
-                            (block_platform, block_version),
-                            blocks[1],   #   The populated block type
-                            block_entity,
+                            block_alive,   #   The populated block type
+                            block_entity
                         )
                     else:
-                        world.set_version_block(
+                        world_context.set_block_at(
                             int(x+box.min_x),
                             int(y),
                             int(z+box.min_z),
-                            dimension,
-                            (block_platform, block_version),
-                            blocks[0],   #   The populated block type
+                            block_dead,   #   The populated block type
                             block_entity,
                         )
                         

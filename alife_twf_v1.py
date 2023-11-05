@@ -39,6 +39,8 @@ class WorldContext:
         self.block_palette = block_palette
         if self.block_palette == None:
             self.block_palette = self.blocks
+        if(export != None):
+            print("Initialised Operation: "+export["name"])
         
     def block_at(self, x, y, z):
         """Get the block at a given location in the world's version"""
@@ -60,6 +62,39 @@ class WorldContext:
             block,
             block_entity
         )
+
+class OperationControl:
+    def __init__(self, selection):
+        self.selection = selection
+        self.progress = 0.0
+        self.stage = 0
+        self.num_selections = len(selection)
+        self.operation_length = 1.0/float(self.num_selections)
+        self.yield_quantum = 0.0
+        if(export != None):  #  This is set at bottom, scope is on parent script
+            print("Initialised Operation: "+export["name"])
+        
+    def set_yield_quantum(self):
+        self.yield_quantum = self.operation_length/float(self.selection[self.stage].max_y - self.selection[self.stage].min_y)
+        
+    def get_next_box(self):
+        if self.stage < len(self.selection):
+            print("Processing box "+str(self.stage)+" of "+str(len(self.selection)))
+            self.stage += 1
+            return self.selection[self.stage-1]
+        return None
+
+    def get_current_box(self):
+        if self.stage < len(self.selection):
+            self.set_yield_quantum()
+            return self.selection[self.stage]
+        else:
+            return None
+
+    def show_progress(self, val):
+        self.progress = float(self.stage)*self.operation_length + float(val-self.get_current_box().min_y)*self.yield_quantum        
+        print("Yielding at "+str(self.progress))
+        return self.progress
 
 def print_field(field):
     for z in range(0, len(field)):
@@ -105,7 +140,10 @@ def alife_twf(
     block_entity = None   #  Constant for non-containers
 
     points = {}
-    for box in selection:
+    op_control = OperationControl(selection)
+    while op_control.get_current_box():
+        box = op_control.get_current_box()
+        
         width = box.max_x - box.min_x
         height = box.max_y - box.min_y
         depth = box.max_z - box.min_z
@@ -124,16 +162,10 @@ def alife_twf(
                     row.append(0)
             field.append(row)
 
-        #   Field is now populated, so I can work out what the rest of the layers should be
-        
+        #   Field is now populated by the lowest layer, so I can work out what the rest of the layers should be
 
-
-        while y < box.min_y+height-1:
-            #  print(y)
-            #  print("--------")
-            #  print_field(field)
+        for y in range(box.min_y, box.max_y):
             field = calculate_next_step(field)
-            y += 1
 
             #   Draw alive blocks to the world
             for z in range(len(field)):
@@ -155,7 +187,9 @@ def alife_twf(
                             block_dead,   #   The populated block type
                             block_entity,
                         )
-                        
+
+            yield op_control.show_progress(y)
+        box = op_control.get_next_box()
 
 
 export = {"name": "ALife TWF (v1)", "operation": alife_twf}

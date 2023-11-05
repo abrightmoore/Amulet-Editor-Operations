@@ -70,8 +70,21 @@ class OperationControl:
         self.num_selections = len(selection)
         self.operation_length = 1.0/float(self.num_selections)
         self.yield_quantum = 0.0
+        self.total_yield_by_box_sizes = 0  #  This yield strategy is used when we're iterating over all the points in all the boxes so we can work out how big the job is.
+        self.calculate_full_yield()
         if(export != None):  #  This is set at bottom, scope is on parent script
             print("Initialised Operation: "+export["name"])
+            
+            
+    def calculate_full_yield(self):
+        total = 0
+        if self.selection != None:
+            for box in self.selection:
+                width = box.max_x - box.min_x
+                height = box.max_y - box.min_y
+                depth = box.max_z - box.min_z
+                total += width * height * depth
+        self.total_yield_by_box_sizes = total
         
     def set_yield_quantum(self):
         self.yield_quantum = self.operation_length/float(self.selection[self.stage].max_y - self.selection[self.stage].min_y)
@@ -95,6 +108,15 @@ class OperationControl:
         #  print("Yielding at "+str(self.progress))
         return self.progress
 
+    def show_progress_by_blocks_processed(self, val):
+        if self.total_yield_by_box_sizes > 0 and val <= self.total_yield_by_box_sizes:
+            self.progress = float(val)/float(self.total_yield_by_box_sizes)
+        else:
+            self.progress = 0.1 + random.random() *0.9  # Show activity even if we can't work out what it is
+        #  print("Yielding at "+str(self.progress))
+        return self.progress
+
+
 def perform(
     world: BaseLevel, dimension: Dimension, selection: SelectionGroup, options: dict
 ):
@@ -104,15 +126,17 @@ def perform(
     block_dead = world_context.block_palette[0]
     block_entity = None   #  Constant for non-containers
 
-    op_control = OperationControl(selection)
-    while op_control.get_current_box():
-        box = op_control.get_current_box()
+    op_control = OperationControl(selection)   #  Progress bar stats
+    blocks_processed = 0   #  Progress bar stats
+    while op_control.get_current_box():   #  Progress bar stats
+        box = op_control.get_current_box()   #  Progress bar stats
         
         chance = random.random()*0.5+0.01
     
         for y in range(box.min_y, box.max_y):
             for z in range(box.min_z, box.max_z):
                 for x in range(box.min_x, box.max_x):
+                    blocks_processed += 1    #  Progress bar stats
                     block = block_alive
                     if random.random() > chance:
                         block = block_dead
@@ -124,8 +148,8 @@ def perform(
                         block,   #   The populated block type
                         block_entity,
                     )
-            yield op_control.show_progress(y)
-        box = op_control.get_next_box()
+                yield op_control.show_progress_by_blocks_processed(blocks_processed)   #  Progress bar stats
+        box = op_control.get_next_box()   #  Progress bar stats
 
 export = {"name": "Randomise TWF (v1)", "operation": perform}
 

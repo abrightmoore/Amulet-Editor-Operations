@@ -1,6 +1,8 @@
 # Amulet-Editor-Operations
 Authored and Contributed Amulet Editor Operations. Based on information from GentleGiantJGC.
 
+* **twf_blanket** place saplings on grass or dirt
+
 * **enclave_TWF_v1** Wrap the selection around a cylinder centred on its lowest x,z point
 
 * **sphere_TWF_v1** Generate a 3D Ellipse within the selection box. Block palette is in a table within the script. 

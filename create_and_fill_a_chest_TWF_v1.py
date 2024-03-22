@@ -8,6 +8,7 @@ from amulet_map_editor.programs.edit.api.operations.errors import OperationError
 from amulet.api.block import Block  # For working with Blocks
 from amulet.api.block_entity import BlockEntity
 from amulet_nbt import *  # For working with block properties
+from amulet_nbt import NBTFile
 import random
 
 
